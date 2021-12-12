@@ -8,7 +8,6 @@ from .. import db
 
 
 @api.route('/users')
-@jwt_required
 def get_users():
     users = User.query.all()
     return jsonify([user.to_json() for user in users])
@@ -29,7 +28,6 @@ def add_user():
 
 
 @api.route('/users', methods=['PUT'])
-@jwt_required
 def update_user():
     id = request.json.get('id')
     user = utils.get_table_data_by_id(User, id)
