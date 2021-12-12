@@ -1,4 +1,5 @@
 from flask import jsonify, request, current_app, url_for
+from flask_jwt_extended import jwt_required
 
 from app.api import utils
 from app.exceptions import ValidationError
@@ -6,20 +7,22 @@ from . import api
 from ..models import ProductCategory, Product
 from .. import db
 
-
 @api.route('/products')
+@jwt_required()
 def get_products():
     products = utils.get_all_table_data(Product)
     return jsonify([product.to_json() for product in products])
 
 
 @api.route('/products/<int:id>')
+@jwt_required()
 def get_product(id):
     product = Product.query.get_or_404(id)
     return jsonify(product.to_json())
 
 
 @api.route('/products', methods=['POST'])
+@jwt_required()
 def add_product():
     product = Product.from_json(request.json)
     db.session.add(product)
@@ -28,6 +31,7 @@ def add_product():
 
 
 @api.route('/products', methods=['PUT'])
+@jwt_required()
 def update_product():
     id = request.json.get('id')
     product = utils.get_table_data_by_id(Product, id)
@@ -41,6 +45,7 @@ def update_product():
 
 
 @api.route('/products/<int:id>', methods=["DELETE"])
+@jwt_required()
 def delete_product(id):
     product = Product.query.get_or_404(id)
     db.session.delete(product)

@@ -1,4 +1,5 @@
 from flask import jsonify, request, current_app, url_for
+from flask_jwt_extended import jwt_required
 
 from . import api
 from . import utils
@@ -7,6 +8,7 @@ from .. import db
 
 
 @api.route('/users')
+@jwt_required
 def get_users():
     users = User.query.all()
     return jsonify([user.to_json() for user in users])
@@ -27,6 +29,7 @@ def add_user():
 
 
 @api.route('/users', methods=['PUT'])
+@jwt_required
 def update_user():
     id = request.json.get('id')
     user = utils.get_table_data_by_id(User, id)
@@ -40,6 +43,7 @@ def update_user():
 
 
 @api.route('/users/<int:id>', methods=["DELETE"])
+@jwt_required
 def delete_user(id):
     user = User.query.get_or_404(id)
     db.session.delete(user)
