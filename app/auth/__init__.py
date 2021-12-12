@@ -1,3 +1,3 @@
 from flask import Blueprint
 
-api = Blueprint('auth', __name__)
+auth = Blueprint('auth', __name__)
