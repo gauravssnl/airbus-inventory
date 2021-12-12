@@ -20,4 +20,24 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    
+class ProductCategory:
+    __tablename__ = 'categories'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True, index=True)
+    products = db.relationship('Product', backref='category', lazy='dynamic')
+
+    @staticmethod
+    def insert_categories():
+        pass
+    def __repr__(self):
+        return '<ProductCategory %r>' % self.name
+class Product:
+    __tablename__ = 'products'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True, index=True)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    description = db.Column(db.String(256))
+    quantity = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<Product %r>' % self.name
