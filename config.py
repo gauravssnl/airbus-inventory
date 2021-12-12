@@ -6,6 +6,8 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     INVENTORY_ADMIN = os.environ.get('INVENTORY_ADMIN') or 'admin@example.com'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # Setup the Flask-JWT-Extended extension
+    JWT_SECRET_KEY = "super-secret"  # Change this!
 
     @staticmethod
     def init_app(app):
