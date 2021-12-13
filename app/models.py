@@ -1,9 +1,8 @@
 from os import name
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-
-from . import db
 from app.exceptions import ValidationError
+from . import db, login_manager
 
 
 class User(UserMixin, db.Model):
@@ -48,6 +47,10 @@ class User(UserMixin, db.Model):
         }
         return json_user
 
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
 
 class ProductCategory(db.Model):
     __tablename__ = 'categories'
@@ -65,13 +68,14 @@ class ProductCategory(db.Model):
     def __repr__(self):
         return '<ProductCategory %r>' % self.name
 
-    def to_json(self, fetch_products_flag= False):
+    def to_json(self, fetch_products_flag=False):
         json_product_category = {
             'id': self.id,
             'name': self.name
         }
         if fetch_products_flag and self.products:
-            json_product_category['products'] = [product.to_json() for product in self.products.all()]
+            json_product_category['products'] = [
+                product.to_json() for product in self.products.all()]
 
         return json_product_category
 

@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
 from .. import db
 from ..models import User
-from .forms import LoginForm, RegistrationForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
+from .forms import LoginForm, RegistrationForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm
 
 
 @auth.before_app_request
@@ -11,7 +11,6 @@ def before_request():
     if current_user.is_authenticated:
         # Add some logic like logging after user is authenticated
         pass
-
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -46,7 +45,6 @@ def register():
                     password=form.password.data)
         db.session.add(user)
         db.session.commit()
-        token = user.generate_confirmation_token()
         flash('Registeration successful.')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)

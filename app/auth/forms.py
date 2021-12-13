@@ -55,4 +55,3 @@ class PasswordResetForm(FlaskForm):
         DataRequired(), EqualTo('password2', message='Passwords must match')])
     password2 = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Reset Password')
-
