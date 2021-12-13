@@ -4,6 +4,22 @@ Airbus Inventory code challenge
 The application is deployed on Heroku and `gunicorn` is used as WSGI server.
 
 Heroku app URL : https://airbus-inventory.herokuapp.com/
+
+The user needs to login first to use the application. If needed, user can register new account.
+
+Please use the below dummy Email account for logging in for the first time 
+Email : admin@example.com
+Password: admin
+
+The application screenshots are available in the screenshots folder .
+
+Most of the REST API ( `/api/v1/login` for example) are secured with JWT Bearer Token. The APIs can be tested with PostMan. The JWT tokens can be obtained by calling the `/api/v1/login` REST API. For subsequent REST API calls, this JWT Token has to be pased.
+
+## Screenshots
+
+Please see `screenshots` folder for more.
+
+![Product Listing Page](https://github.com/gauravssnl/airbus-inventory/blob/main/screenshots/Screenshot%20from%202021-12-13%2023-36-02.png)
 ## Steps
 To run the application , follow the below steps as needed:
 1. Set the Flask application name environment variable first, by running the below command:
