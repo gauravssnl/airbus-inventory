@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Inventory - {{mode}} Product{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>{{mode}} Product</h1>
+</div>
+<div>
+    {{ wtf.quick_form(form) }}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
